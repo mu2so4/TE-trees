@@ -1,6 +1,7 @@
 package ru.nsu.ccfit.muratov.railroad;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TreeDTO {
@@ -73,20 +74,16 @@ public class TreeDTO {
         if (children.size() != dto.children.size()) {
             return false;
         }
-        List<TreeDTO> objChildren = new LinkedList<>(dto.children);
-        for (TreeDTO ourChild : children) {
-            int equalDtoIndex = -1;
-            for (int index = 0; index < objChildren.size(); index++) {
-                TreeDTO theirChild = objChildren.get(index);
-                if (ourChild.equals(theirChild)) {
-                    equalDtoIndex = index;
-                    break;
-                }
-            }
-            if (equalDtoIndex == -1) {
+        List<TreeDTO> ourChildren = new ArrayList<>(children);
+        List<TreeDTO> theirChildren = new ArrayList<>(dto.children);
+        ourChildren.sort(Comparator.comparingInt(TreeDTO::getId));
+        theirChildren.sort(Comparator.comparingInt(TreeDTO::getId));
+        int size = ourChildren.size();
+
+        for(int index = 0; index < size; index++) {
+            if(!ourChildren.get(index).equals(theirChildren.get(index))) {
                 return false;
             }
-            objChildren.remove(equalDtoIndex);
         }
         return true;
     }
