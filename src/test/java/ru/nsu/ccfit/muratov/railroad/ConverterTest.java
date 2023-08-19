@@ -20,9 +20,9 @@ public class ConverterTest {
         entities.add(new Converter.TreeEntity(9, "f", 8));
         entities.add(new Converter.TreeEntity(0, "g", 9));
 
-        Collection<Converter.TreeDTO> dtos = Converter.convert(entities);
+        Collection<TreeDTO> dtos = Converter.convert(entities);
 
-        for(Converter.TreeDTO dto: dtos) {
+        for(TreeDTO dto: dtos) {
             System.out.println(dto);
         }
     }
