@@ -49,15 +49,25 @@ public class Converter {
         private String name;
         private List<TreeDTO> children;
 
+        private String toString(int level) {
+            StringBuilder builder = new StringBuilder();
+            builder.append("\t".repeat(Math.max(0, level)));
+            builder.append(String.format("{\"id\": %d, \"name\": \"%s\"", id, name));
+            if(!children.isEmpty()) {
+                builder.append(", \"children\": [\n");
+                for (TreeDTO child : children) {
+                    builder.append(child.toString(level + 1));
+                }
+                builder.append("\t".repeat(Math.max(0, level)));
+                builder.append("]");
+            }
+            builder.append("},\n");
+            return builder.toString();
+        }
+
         @Override
         public String toString() {
-            StringBuilder builder = new StringBuilder();
-            builder.append(String.format("{\"id\": %d, \"name\": \"%s\", \"children\": [", id, name));
-            for(TreeDTO child: children) {
-                builder.append(child);
-            }
-            builder.append("]},\n");
-            return builder.toString();
+            return toString(0);
         }
     }
 }
