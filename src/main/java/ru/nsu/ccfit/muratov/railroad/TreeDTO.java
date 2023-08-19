@@ -37,7 +37,7 @@ public class TreeDTO {
         StringBuilder builder = new StringBuilder();
         builder.append("\t".repeat(Math.max(0, level)));
         builder.append(String.format("{\"id\": %d, \"name\": \"%s\"", id, name));
-        if (!children.isEmpty()) {
+        if (children != null && !children.isEmpty()) {
             builder.append(", \"children\": [\n");
             for (TreeDTO child : children) {
                 builder.append(child.toString(level + 1));
@@ -65,9 +65,32 @@ public class TreeDTO {
         if (!(obj instanceof TreeDTO dto)) {
             return false;
         }
-        if (!id.equals(dto.id) || !name.equals(dto.name)) {
+
+        if(id != null) {
+            if(!id.equals(dto.id)) {
+                return false;
+            }
+        }
+        else if(dto.id != null) {
             return false;
         }
+
+        if(name != null) {
+            if(!name.equals(dto.name)) {
+                return false;
+            }
+        }
+        else if(dto.name != null) {
+            return false;
+        }
+
+        if(children == null) {
+            return dto.children == null;
+        }
+        if(dto.children == null) {
+            return false;
+        }
+
         if (children.isEmpty() && dto.children.isEmpty()) {
             return true;
         }
