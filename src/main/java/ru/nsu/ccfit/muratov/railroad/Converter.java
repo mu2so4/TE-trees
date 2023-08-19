@@ -7,40 +7,29 @@ public class Converter {
         List<TreeDTO> roots = new ArrayList<>();
         Map<Integer, TreeDTO> entitiesById = new HashMap<>();
         for(TreeEntity entity: entities) {
-            TreeDTO dto = entitiesById.get(entity.id);
+            TreeDTO dto = entitiesById.get(entity.getId());
             if (dto == null) {
                 dto = new TreeDTO();
-                dto.setId(entity.id);
+                dto.setId(entity.getId());
                 dto.setChildren(new ArrayList<>());
-                entitiesById.put(entity.id, dto);
+                entitiesById.put(entity.getId(), dto);
             }
-            dto.setName(entity.name);
+            dto.setName(entity.getName());
 
-            if(entity.parentId == null) {
+            if(entity.getParentId() == null) {
                 roots.add(dto);
                 continue;
             }
-            TreeDTO directParent = entitiesById.get(entity.parentId);
+            TreeDTO directParent = entitiesById.get(entity.getParentId());
             if(directParent == null) {
                 directParent = new TreeDTO();
                 directParent.setChildren(new ArrayList<>());
-                directParent.setId(entity.parentId);
-                entitiesById.put(entity.parentId, directParent);
+                directParent.setId(entity.getParentId());
+                entitiesById.put(entity.getParentId(), directParent);
             }
             directParent.getChildren().add(dto);
         }
         return roots;
     }
 
-    public static class TreeEntity {
-        private Integer id;
-        private String name;
-        private Integer parentId;
-
-        public TreeEntity(Integer id, String name, Integer parentId) {
-            this.id = id;
-            this.name = name;
-            this.parentId = parentId;
-        }
-    }
 }
