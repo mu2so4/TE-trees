@@ -69,5 +69,43 @@ public class Converter {
         public String toString() {
             return toString(0);
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(this == obj) {
+                return true;
+            }
+            if(obj == null) {
+                return false;
+            }
+            if(!(obj instanceof TreeDTO dto)) {
+                return false;
+            }
+            if(!id.equals(dto.id) || !name.equals(dto.name)) {
+                return false;
+            }
+            if(children.isEmpty() && dto.children.isEmpty()) {
+                return true;
+            }
+            if(children.size() != dto.children.size()) {
+                return false;
+            }
+            List<TreeDTO> objChildren = new LinkedList<>(dto.children);
+            for(TreeDTO ourChild: children) {
+                int equalDtoIndex = -1;
+                for(int index = 0; index < objChildren.size(); index++) {
+                    TreeDTO theirChild = objChildren.get(index);
+                    if(ourChild.equals(theirChild)) {
+                        equalDtoIndex = index;
+                        break;
+                    }
+                }
+                if(equalDtoIndex == -1) {
+                    return false;
+                }
+                objChildren.remove(equalDtoIndex);
+            }
+            return true;
+        }
     }
 }
