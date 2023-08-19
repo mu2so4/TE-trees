@@ -12,4 +12,24 @@ public class TreeDTOEqualsTest {
             Assert.assertEquals(dto, dto);
         }
     }
+    @Test
+    public void testSymmetric() {
+        TreeDTO dto1 = new TreeDTO();
+        TreeDTO dto2 = new TreeDTO();
+        Assert.assertEquals(dto1, dto2);
+
+        dto1.setId(10);
+        dto2.setId(10);
+        Assert.assertEquals(dto1, dto2);
+        Assert.assertEquals(dto1.equals(dto2), dto2.equals(dto1));
+
+        dto1.setName("test");
+        dto2.setName("test");
+        Assert.assertEquals(dto1, dto2);
+        Assert.assertEquals(dto1.equals(dto2), dto2.equals(dto1));
+
+        dto2.setName("repeat");
+        Assert.assertNotEquals(dto1, dto2);
+        Assert.assertEquals(dto1.equals(dto2), dto2.equals(dto1));
+    }
 }
