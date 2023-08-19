@@ -31,15 +31,32 @@ public class Converter {
         return roots;
     }
 
-    private static class TreeEntity {
+    public static class TreeEntity {
         private Integer id;
         private String name;
         private Integer parentId;
+
+        public TreeEntity(Integer id, String name, Integer parentId) {
+            this.id = id;
+            this.name = name;
+            this.parentId = parentId;
+        }
     }
 
-    private static class TreeDTO {
+    public static class TreeDTO {
         private Integer id;
         private String name;
         private List<TreeDTO> children;
+
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            builder.append(String.format("{\"id\": %d, \"name\": \"%s\", \"children\": [", id, name));
+            for(TreeDTO child: children) {
+                builder.append(child);
+            }
+            builder.append("]},\n");
+            return builder.toString();
+        }
     }
 }
