@@ -12,10 +12,10 @@ public class Converter {
                 dto = new TreeDTO();
                 dto.id = entity.id;
                 dto.children = new ArrayList<>();
+                entitiesById.put(entity.id, dto);
             }
             dto.name = entity.name;
 
-            entitiesById.put(entity.id, dto);
             if(entity.parentId == null) {
                 roots.add(dto);
                 continue;
@@ -25,6 +25,7 @@ public class Converter {
                 directParent = new TreeDTO();
                 directParent.children = new ArrayList<>();
                 directParent.id = entity.parentId;
+                entitiesById.put(entity.parentId, directParent);
             }
             directParent.children.add(dto);
         }
