@@ -45,5 +45,12 @@ public class TreeDTOEqualsTest {
         root1.addChild(new TreeDTO(2, "ab"));
         root2.addChild(new TreeDTO(2, "ab"));
         Assert.assertEquals(root1, root2);
+
+        root1.getNthChild(0).addChild(new TreeDTO(3, "c"));
+        root2.getNthChild(0).addChild(new TreeDTO(3, "c"));
+        Assert.assertEquals(root1, root2);
+
+        root1.getNthChild(0).getNthChild(0).setName("d");
+        Assert.assertNotEquals(root1, root2);
     }
 }
