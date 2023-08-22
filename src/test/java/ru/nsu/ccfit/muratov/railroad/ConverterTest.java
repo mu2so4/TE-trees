@@ -69,8 +69,45 @@ public class ConverterTest {
         entities.add(new TreeEntity(10, "resignation", 1));
         entities.add(new TreeEntity(11, "absorb", 6));
         entities.add(new TreeEntity(12, "fit", null));
-        entities.add(new TreeEntity(13, "forward", null));
+        entities.add(new TreeEntity(13, "forward", 5));
         return entities;
+    }
+
+    private static Collection<TreeDTO> getAnswer2() {
+        List<TreeDTO> dtos = new ArrayList<>();
+        for(int index = 0; index < 13; index++) {
+            dtos.add(new TreeDTO(index + 1, null));
+        }
+        dtos.get(0).setName("arm");
+        dtos.get(1).setName("denial");
+        dtos.get(2).setName("indirect");
+        dtos.get(3).setName("couple");
+        dtos.get(4).setName("confrontation");
+        dtos.get(5).setName("daughter");
+        dtos.get(6).setName("live");
+        dtos.get(7).setName("home");
+        dtos.get(8).setName("fever");
+        dtos.get(9).setName("resignation");
+        dtos.get(10).setName("absorb");
+        dtos.get(11).setName("fit");
+        dtos.get(12).setName("forward");
+
+        dtos.get(4).addChild(dtos.get(12));
+        dtos.get(4).addChild(dtos.get(3));
+        dtos.get(5).addChild(dtos.get(10));
+        dtos.get(10).addChild(dtos.get(0));
+        dtos.get(0).addChild(dtos.get(1));
+        dtos.get(0).addChild(dtos.get(9));
+        dtos.get(0).addChild(dtos.get(7));
+        dtos.get(9).addChild(dtos.get(6));
+        dtos.get(8).addChild(dtos.get(2));
+
+        List<TreeDTO> result = new ArrayList<>();
+        result.add(dtos.get(4));
+        result.add(dtos.get(11));
+        result.add(dtos.get(5));
+        result.add(dtos.get(8));
+        return result;
     }
 
     @Test
@@ -91,13 +128,19 @@ public class ConverterTest {
     }
 
     @Test
-    public void shuffleChildren() {
-
-    }
-
     public void forestTest() {
+        Collection<TreeDTO> actual = Converter.convert(createForest1());
+        Collection<TreeDTO> expected = getAnswer2();
+        Assert.assertEquals(actual.size(), expected.size());
 
+        List<TreeDTO> expectedList = new ArrayList<>(expected);
+        List<TreeDTO> actualList = new ArrayList<>(actual);
+
+        expectedList.sort(Comparator.comparingInt(TreeDTO::getId));
+        actualList.sort(Comparator.comparingInt(TreeDTO::getId));
+
+        for(int index = 0; index < actualList.size(); index++) {
+            Assert.assertEquals(expectedList.get(index), actualList.get(index));
+        }
     }
-
-
 }
