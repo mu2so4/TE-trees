@@ -9,6 +9,16 @@ public class TreeDTO {
     private String name;
     private List<TreeDTO> children;
 
+    public TreeDTO() {
+        children = new ArrayList<>();
+    }
+
+    public TreeDTO(Integer id, String name) {
+        this();
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -31,6 +41,14 @@ public class TreeDTO {
 
     public void setChildren(List<TreeDTO> children) {
         this.children = children;
+    }
+
+    public void addChild(TreeDTO child) {
+        children.add(child);
+    }
+
+    public TreeDTO getNthChild(int id) {
+        return children.get(id);
     }
 
     private String toString(int level) {
