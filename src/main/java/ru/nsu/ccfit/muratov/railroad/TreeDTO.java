@@ -43,8 +43,8 @@ public class TreeDTO {
         children.add(child);
     }
 
-    public TreeDTO getNthChild(int id) {
-        return children.get(id);
+    public TreeDTO getNthChild(int index) {
+        return children.get(index);
     }
 
     private String toString(int level) {
