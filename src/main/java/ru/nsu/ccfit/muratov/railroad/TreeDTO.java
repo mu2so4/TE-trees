@@ -7,7 +7,7 @@ import java.util.List;
 public class TreeDTO {
     private Integer id;
     private String name;
-    private List<TreeDTO> children;
+    private final List<TreeDTO> children;
 
     public TreeDTO() {
         children = new ArrayList<>();
@@ -37,10 +37,6 @@ public class TreeDTO {
 
     public List<TreeDTO> getChildren() {
         return children;
-    }
-
-    public void setChildren(List<TreeDTO> children) {
-        this.children = children;
     }
 
     public void addChild(TreeDTO child) {
